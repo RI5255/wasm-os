@@ -21,14 +21,14 @@ struct task *task_find(task_t tid) {
     return tasks[tid - 1];
 }
 
-// create task from WASM binary
+// create task from Wasm binary
 static task_t task_spawn_from_wasm(struct bootfs_file *file) {
     struct task *task = malloc(sizeof(*task));
     if (!task) {
         PANIC("too many tasks");
     }
 
-    // copy wasm binary
+    // copy Wasm binary
     // todo: validate size here?
     size_t size = file->len;
     wasm_hdr *wasm = malloc(size);
@@ -36,19 +36,19 @@ static task_t task_spawn_from_wasm(struct bootfs_file *file) {
 
     // validate version
     if (wasm->version != WASM_VERSION) {
-        WARN("%s: invalid WASM version: %x", file->name, wasm->version);
+        WARN("%s: invalid Wasm version: %x", file->name, wasm->version);
         free(wasm);
         return ERR_INVALID_ARG;
     }
 
-    // create WASMVM task
+    // create WasmVM task
     error_t tid_or_err = sys_wasmvm(file->name, (uint8_t *) wasm, size, task_self());
     if (IS_ERROR(tid_or_err)) {
         return tid_or_err;
     }
 
     // init task struct
-    // WASMVM task runs in kernel mode, so page faults do not occur(maybe)
+    // WasmVM task runs in kernel mode, so page faults do not occur(maybe)
     task->tid = tid_or_err;
     task->pager = task_self();
     task->file_header = wasm;

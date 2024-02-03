@@ -32,7 +32,7 @@ static error_t __ipc(task_t dst, task_t src, struct message *m, unsigned flags) 
     return ipc(dst_task, src, (__user struct message *) m, flags | IPC_KERNEL | IPC_WASMVM);
 }
 
-// host functions exported to WASM
+// host functions exported to Wasm
 static void __ipc_reply(wasm_exec_env_t exec_env, task_t dst, struct message *m) {
     error_t err = __ipc(dst, 0, m, IPC_SEND | IPC_NOBLOCK);
     OOPS_OK(err);
@@ -129,7 +129,7 @@ __noreturn void wasmvm_run(struct wasmvm *wasmvm) {
         sizeof(error_buf)
     );
     if (!module) {
-        ERROR("load wasm module failed");
+        ERROR("load Wasm module failed");
         goto fail_1;
     }
 

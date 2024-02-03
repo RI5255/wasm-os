@@ -192,7 +192,7 @@ task_t hinavm_create(const char *name, hinavm_inst_t *insts, uint32_t num_insts,
     return tid;
 }
 
-// Create WASMVM task
+// Create WasmVM task
 task_t wasmvm_create(const char *name, uint8_t *wasm, uint32_t size, 
                      struct task *pager) {
     task_t tid = alloc_tid();
@@ -210,7 +210,7 @@ task_t wasmvm_create(const char *name, uint8_t *wasm, uint32_t size,
         return ERR_NO_MEMORY;
     }
 
-    // copy wasm binary
+    // copy Wasm binary
     struct wasmvm *wasmvm = (struct wasmvm *) arch_paddr_to_vaddr(wasmvm_paddr);
     memcpy(&wasmvm->code, wasm, size);
     wasmvm->size = size;
@@ -226,7 +226,7 @@ task_t wasmvm_create(const char *name, uint8_t *wasm, uint32_t size,
     pm_own_page(wasmvm_paddr, task);
     list_push_back(&active_tasks, &task->next);
     task_resume(task);
-    TRACE("created a WASMVM task \"%s\" (tid=%d)", name, tid);
+    TRACE("created a WasmVM task \"%s\" (tid=%d)", name, tid);
     return tid;
 }
 

@@ -107,7 +107,7 @@ static task_t sys_hinavm(__user const char *name, __user hinavm_inst_t *insts,
     return hinavm_create(namebuf, instsbuf, num_insts, pager_task);
 }
 
-// create WASMVM task
+// create WasmVM task
 static task_t sys_wasmvm(__user const char *name, __user uint8_t *wasm,
                         size_t size, task_t pager) {
     // get task name
@@ -125,18 +125,18 @@ static task_t sys_wasmvm(__user const char *name, __user uint8_t *wasm,
 
     // validate size
     if (size > WASMVM_CODE_SIZE_MAX) {
-        WARN("wasm too big: %u (max=%u)", size, WASMVM_CODE_SIZE_MAX);
+        WARN("Wasm too big: %u (max=%u)", size, WASMVM_CODE_SIZE_MAX);
         return ERR_INVALID_ARG;
     }
 
-    // copy wasm binary
+    // copy Wasm binary
     uint8_t wasmbuf[WASMVM_CODE_SIZE_MAX];
     err = memcpy_from_user(wasmbuf, wasm, size);
     if (err != OK) {
         return err;
     }
     
-    // create WASMVM task
+    // create WasmVM task
     return wasmvm_create(namebuf, wasmbuf, size, pager_task);
 }
 
