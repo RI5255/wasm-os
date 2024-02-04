@@ -1,0 +1,22 @@
+name: Run sisakulint from GitHub Actions
+on: [push]
+
+jobs:
+  sisakulint-job:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Install sisakulint
+      run: |
+        brew tap ultra-supara/homebrew-sisakulint
+        brew install sisakulint
+
+    - name: Clone goreleaser repository
+      run: git clone https://github.com/r1ru/WasmOS.git
+
+    - name: Run sisakulint
+      run: |
+        cd WasmOS
+        sisakulint -debug
