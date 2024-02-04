@@ -7,10 +7,22 @@
 #include <libs/user/syscall.h>
 
 static void do_echo(struct args *args) {
-    for (int i = 1; i < args->argc; i++) {
-        printf("%s ", args->argv[i]);
+    if (args->argc != 2) {
+        WARN("Usage: echo <DATA>");
+        return;
     }
-    printf(PRINT_NL);
+
+    task_t echo_server = ipc_lookup("echo");
+
+    struct message m;
+    m.type = ECHO_MSG;
+    strcpy_safe((char *)m.echo.data, sizeof(m.echo.data), args->argv[1]);
+    m.echo.data_len = strlen(args->argv[1]);
+    ASSERT_OK(ipc_call(echo_server, &m));
+
+    char data[sizeof(m.echo_reply) + 1] = {};
+    strcpy_safe(data, sizeof(data), (char *)m.echo_reply.data);
+    printf("%s" PRINT_NL, data);
 }
 
 static void do_http(struct args *args) {
