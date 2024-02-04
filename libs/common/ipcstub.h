@@ -251,11 +251,11 @@ struct tcpip_closed_fields {
 };
 
 struct echo_fields {
-    uint8_t data[256];
+    uint8_t data[1024];
     size_t data_len;
 };
 struct echo_reply_fields {
-    uint8_t data[256];
+    uint8_t data[1024];
     size_t data_len;
 };
 

@@ -138,4 +138,4 @@ oneway tcpip_closed(sock: int);
 // Echo Server
 //
 
-rpc echo(data: bytes[256]) -> (data: bytes[256]);
+rpc echo(data: bytes[1024]) -> (data: bytes[1024]);
