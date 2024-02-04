@@ -250,6 +250,15 @@ struct tcpip_closed_fields {
     int sock;
 };
 
+struct echo_fields {
+    uint8_t data[256];
+    size_t data_len;
+};
+struct echo_reply_fields {
+    uint8_t data[256];
+    size_t data_len;
+};
+
 
 
 #define EXCEPTION_MSG 1
@@ -316,6 +325,8 @@ struct tcpip_closed_fields {
 #define TCPIP_DNS_RESOLVE_REPLY_MSG 62
 #define TCPIP_DATA_MSG 63
 #define TCPIP_CLOSED_MSG 64
+#define ECHO_MSG 65
+#define ECHO_REPLY_MSG 66
 
 //
 //  各種マクロの定義
@@ -385,8 +396,10 @@ struct tcpip_closed_fields {
     struct tcpip_dns_resolve_reply_fields tcpip_dns_resolve_reply; \
     struct tcpip_data_fields tcpip_data; \
     struct tcpip_closed_fields tcpip_closed; \
+    struct echo_fields echo; \
+    struct echo_reply_fields echo_reply; \
 
-#define IPCSTUB_MSGID_MAX 64
+#define IPCSTUB_MSGID_MAX 66
 #define IPCSTUB_MSGID2STR \
     (const char *[]){ \
      \
@@ -489,6 +502,9 @@ struct tcpip_closed_fields {
         [63] = "tcpip_data", \
      \
         [64] = "tcpip_closed", \
+     \
+        [65] = "echo", \
+        [66] = "echo_reply", \
      \
     }
 
@@ -748,5 +764,13 @@ struct tcpip_closed_fields {
     _Static_assert( \
         sizeof(struct tcpip_closed_fields) < 4096, \
         "'tcpip_closed' message is too large, should be less than 4096 bytes" \
+    ); \
+    _Static_assert( \
+        sizeof(struct echo_fields) < 4096, \
+        "'echo' message is too large, should be less than 4096 bytes" \
+    ); \
+    _Static_assert( \
+        sizeof(struct echo_reply_fields) < 4096, \
+        "'echo_reply' message is too large, should be less than 4096 bytes" \
     ); \
 

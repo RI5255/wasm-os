@@ -10,7 +10,7 @@ BUILD_DIR ?= build
 LLVM_PREFIX ?=
 
 # 自動起動するサーバのリスト
-BOOT_SERVERS ?= fs tcpip shell virtio_blk virtio_net pong
+BOOT_SERVERS ?= fs tcpip shell virtio_blk virtio_net pong echo
 
 # 起動時に自動実行するシェルコマンド (テストを自動化したいときに便利)
 #
