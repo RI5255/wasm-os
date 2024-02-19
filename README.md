@@ -8,7 +8,8 @@ WasmOS is a microkernel developed based on [HinaOS](https://github.com/nuta/micr
 It implements a WebAssembly (Wasm) "userland", and all Wasm binaries are executed in Ring 0 using [WAMR](https://github.com/bytecodealliance/wasm-micro-runtime).
 See my [blog](https://medium.com/@r1ru/wasmos-a-proof-of-concept-microkernel-that-runs-webassembly-natively-850043cad121) for more details.
 
-![wasmos](https://github.com/RI5255/wasmos/assets/92210252/9bccd926-6260-4d1c-947a-68df5e452d7d)
+![WasmOS_shell](https://github.com/r1ru/WasmOS/assets/92210252/67e978a4-9bd9-4d6f-8f15-8efc8de60989)
+
 
 ## Quickstart
 First clone this repository, remember to add the --recursive option as Wasm uses [WAMR](https://github.com/bytecodealliance/wasm-micro-runtime) as a submodule.
@@ -28,7 +29,6 @@ If it starts successfully, the shell server is launched and you can execute foll
 
 ```
 start hello         # Run a helllo-world program
-start hello_wasmvm  # Run a program that uses the system call sys_wasmvm, which generates tasks from Wasm binaries
 start wasm_ping     # Run a Wasm binary that uses message passing APIs
 start wasm_webapi   # Run a toy web server (Wasm binary). Access localhost:1234 to see the page
 ```
